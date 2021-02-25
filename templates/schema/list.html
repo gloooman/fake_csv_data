@@ -1,0 +1,28 @@
+{% extends "_base.html" %}
+{% block title %}Schemas{% endblock %}
+{% block content %}
+    <div class="row mb-2 mt-4">
+    <div class="col-sm-8"><h2>Data schemas</h2></div>
+    <div class="col-sm-4 text-right"><a href="{% url 'create_schema' %}" class="btn btn-outline-success" type="submit">New schema</a></div>
+    </div>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Modified</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in object_list %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ item.name }}</td>
+      <td>{{ item.modified | date:"c" }}</td>
+      <td><a href="{% url 'datasets' id=item.id %}" class="btn btn-outline-primary">Detail</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

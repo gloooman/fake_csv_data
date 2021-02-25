@@ -1,0 +1,52 @@
+{% extends "_base.html" %}
+{% block title %}Log-in{% endblock %}
+{% block content %}
+    <div class="row mb-2 mt-4">
+        <div class="col-sm-4"><h2>Data sets</h2></div>
+        <div class="col-sm-8 text-right">
+            <form class="form-inline float-right" method="post">
+                {% csrf_token %}
+                <div class="form-group mx-sm-2 mb-2">
+                    <label class="mr-2">Rows:</label>
+                    <input type="number" class="form-control" id="rows" name='rows' style="width: 5em;"
+                           placeholder="Rows"
+                           value="50">
+                </div>
+                <button type="submit" class="btn btn-success mb-2">Generate data</button>
+            </form>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Created</th>
+                <th scope="col">Rows</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dataset in datasets %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ dataset.created | date:"c" }}</td>
+                    <td>{{ dataset.rows }}</td>
+                    <td>
+                        {% if dataset.status == 'processing' %}
+                            <span class="badge badge-warning">Processing</span>
+                        {% elif dataset.status == 'ready' %}
+                            <span class="badge badge-success">Ready</span>
+                        {% elif dataset.status == 'error' %}
+                            <span class="badge badge-danger">Error</span>
+                        {% endif %}
+                    <td>
+                        {% if dataset.image_url %}
+                            <a href="{{ dataset.image_url }}" class="btn btn-outline-warning mr-3">Download</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
