@@ -144,3 +144,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+BROKER_URL = os.environ['REDIS_URL'],
+CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
