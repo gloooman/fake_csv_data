@@ -1,2 +1,1 @@
-web: gunicorn csv_creator.wsgi --log-file -
-worker: celery -A celery_app worker -l info
+web: env > .env; env PYTHONUNBUFFERED=true honcho start -f Procfile.real 2>&1
